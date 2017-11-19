@@ -4,6 +4,7 @@ typedef struct listnode {
 	int data;
 	struct listnode *prev, *next;
 } Listnode;
+/* The functions below assert all positions to be inserted/deleted are valid */
 Listnode *insert_node(Listnode *head, int data, int pos) {
 	Listnode *new = (Listnode *)malloc(sizeof(Listnode));
 	new->data = data;
@@ -18,7 +19,7 @@ Listnode *insert_node(Listnode *head, int data, int pos) {
 		return new;
 	}
 	Listnode *curr = head;
-	pos --;
+	pos --; // <- we need to track the previous node, thus pos must minus 1
 	while (pos --) curr = curr->next;
 	new->next = curr->next;
 	new->prev = curr;
@@ -33,7 +34,7 @@ Listnode *delete_node(Listnode *head, int pos) {
 	if (pos == 0) {
 		Listnode *temp = curr->next;
 		free(curr);
-		if (temp != NULL) temp->prev = NULL; // <- you need to be careful here
+		if (temp != NULL) temp->prev = NULL; // <- we need to be careful here
 		return temp;
 	}
 	while (pos --) curr = curr->next;
