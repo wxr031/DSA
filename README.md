@@ -1,2 +1,2 @@
 # Data Structure and Algorithms
-## My learnig notes on DSA. Nothing cool inside ;)
+## This is just my learnig notes on DSA. Nothing cool inside ;)
