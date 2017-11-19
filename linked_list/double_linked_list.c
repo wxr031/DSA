@@ -46,9 +46,11 @@ Listnode *delete_node(Listnode *head, int pos) {
 	return head;
 }
 Listnode *delete_node(Listnode *head) {
+	Listnode *temp;
 	while (head != NULL) {
-		free(head);
+		temp = head;
 		head = head->next;
+		free(temp);
 	}
 	return NULL;
 }
