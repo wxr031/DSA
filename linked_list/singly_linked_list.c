@@ -4,6 +4,7 @@ typedef struct listnode {
 	int data;
 	struct listnode *next;
 } Listnode;
+/*The functions below assert all positions are valid*/
 Listnode *insert_node(Listnode *head, int pos, int data) { 
 	Listnode *new = (Listnode *)malloc(sizeof(Listnode));
 	new->data = data;
@@ -25,7 +26,8 @@ Listnode *insert_node(Listnode *head, int pos, int data) {
 	return head;
 }
 Listnode *delete_node(Listnode *head, int pos) {
-	if (head == NULL || head->next == NULL) return NULL;
+	if (head == NULL || head->next == NULL)
+		return NULL;
 	if (pos == 0) {
 		Listnode *temp = head->next;
 		free(head);

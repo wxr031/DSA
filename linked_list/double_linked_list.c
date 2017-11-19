@@ -4,7 +4,7 @@ typedef struct listnode {
 	int data;
 	struct listnode *prev, *next;
 } Listnode;
-/* The functions below assert all positions to be inserted/deleted are valid */
+/* The functions below assert all positions are valid */
 Listnode *insert_node(Listnode *head, int data, int pos) {
 	Listnode *new = (Listnode *)malloc(sizeof(Listnode));
 	new->data = data;
@@ -34,7 +34,7 @@ Listnode *delete_node(Listnode *head, int pos) {
 	if (pos == 0) {
 		Listnode *temp = curr->next;
 		free(curr);
-		if (temp != NULL) temp->prev = NULL; // <- we need to be careful here
+		if (temp != NULL) temp->prev = NULL; // <- to be careful here
 		return temp;
 	}
 	while (pos --) curr = curr->next;
@@ -45,7 +45,17 @@ Listnode *delete_node(Listnode *head, int pos) {
 		temp->next->prev = temp;
 	return head;
 }
+Listnode *delete_node(Listnode *head) {
+	while (head != NULL) {
+		free(head);
+		head = head->next;
+	}
+	return NULL;
+}
 int main() {
 	/*Add test code here*/
 	return 0;
 }
+//Insertion and Deletion:
+//Time complexity: O(n), since we may need to insert/delete a new node to the end of the list in the worst case.
+//Space complexity: O(1).
