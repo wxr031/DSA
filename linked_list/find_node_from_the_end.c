@@ -16,7 +16,7 @@ int find_from_end1(Listnode *head, int pos) {
 	}
 	return hash[N - pos - 1];
 }
-//Second Version: Find N (total number of linked list), the find N - pos - 2 one
+//Second Version: Find N (total number of linked list), the find the (N - pos - 1)'th value
 // Time complexity: O(n)
 // Spaxe complexity: O(1)
 int find_from_end2(Listnode *head, int pos) {
@@ -31,7 +31,6 @@ int find_from_end2(Listnode *head, int pos) {
 	return head->data;
 }
 //Third Version: Single traversal
-// If head is NULL, return INT_MIN
 // Time complexity: O(n)
 // Spaxe complexity: O(1)
 int find_from_end3(Listnode *head, int pos) {
