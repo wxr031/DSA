@@ -1,7 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <limits.h>
-#define MAXN 2024
 typedef struct listnode {
 	int data;
 	struct listnode *next;
