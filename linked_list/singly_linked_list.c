@@ -4,7 +4,11 @@ typedef struct listnode {
 	int data;
 	struct listnode *next;
 } Listnode;
-/*The functions below assert all positions are valid*/
+//Insertion and Deletion:
+//Time complexity: O(n), since we may need to insert/delete a new node to the end of the list in the worst case.
+//Space complexity: O(1).
+
+//The functions below assert all positions are valid
 Listnode *insert_node(Listnode *head, int pos, int data) { 
 	Listnode *new = (Listnode *)malloc(sizeof(Listnode));
 	new->data = data;
@@ -52,9 +56,6 @@ Listnode *delete_whole_list(Listnode *head) {
 	return NULL;
 }
 int main() {
-	/*Add test code here*/
+	/*Add test code*/
 	return 0;
 }
-//Insertion and Deletion:
-//Time complexity: O(n), since we may need to insert/delete a new node to the end of the list in the worst case.
-//Space complexity: O(1).
