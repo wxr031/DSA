@@ -13,7 +13,7 @@ Listnode *insert_node(Listnode *head, int pos, int data) {
 	Listnode *new = (Listnode *)malloc(sizeof(Listnode));
 	new->data = data;
 	if (head == NULL) {
-		new->next == NULL;
+		new->next = NULL;
 		return new;
 	}
 	if (pos == 0) {
