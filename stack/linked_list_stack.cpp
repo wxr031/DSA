@@ -1,5 +1,6 @@
 #include <iostream>
 
+class Listnode;
 class LinkedListStack;
 
 class Listnode {
@@ -7,8 +8,8 @@ private:
 	int data;
 	Listnode *next;
 public:
-	Listnode(): next(NULL) {}
-	Listnode(int n): data(n), next(NULL) {}
+	Listnode(): next(nullptr) {}
+	Listnode(int n): data(n), next(nullptr) {}
 
 	friend class LinkedListStack;
 };
