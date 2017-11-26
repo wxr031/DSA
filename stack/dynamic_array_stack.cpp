@@ -3,7 +3,7 @@ class ArrayStack {
 private:
 	int top, capacity;
 	int *array;
-	void double_array();
+	void double_array(); // Time cimplexity: O(n) for creating a new array of double size.
 public:
 	ArrayStack(): top(-1), capacity(1) {
 		array = new int[capacity];
