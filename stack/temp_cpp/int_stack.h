@@ -6,11 +6,11 @@ class Stack;
 
 class Listnode {
 private:
-	char data;
+	int data;
 	Listnode *next;
 public:
 	Listnode(): next(NULL) {}
-	Listnode(char n): data(n), next(NULL) {}
+	Listnode(int n): data(n), next(NULL) {}
 
 	friend class Stack;
 };
@@ -22,9 +22,9 @@ public:
 	Stack(): top(-1) {}
 	bool is_empty();
 	void push(int);
-	char pop();
+	int pop();
 	int get_size();
-	char get_top();
+	int get_top();
 
 	friend class Listnode;
 };
