@@ -10,6 +10,10 @@ void Stack::push(int n) {
 	top ++;
 }
 int Stack::pop() {
+	if (is_empty()) {
+		std::cerr << "Stack Empty." << std::endl;
+		return 0x80000000;
+	}
 	int temp_data = head->data;
 	Listnode *temp = head;
 	head = head->next;
@@ -19,4 +23,7 @@ int Stack::pop() {
 }
 int Stack::get_size() {
 	return top + 1;
+}
+int Stack::get_top() {
+	return head->data;
 }

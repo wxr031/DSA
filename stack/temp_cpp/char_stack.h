@@ -24,6 +24,7 @@ public:
 	void push(int);
 	int pop();
 	int get_size();
+	int get_top();
 
 	friend class Listnode;
 };
