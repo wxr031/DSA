@@ -38,27 +38,7 @@ int pop(Stack *stack) {
 	return elm;
 }
 int main() {
-	Stack stack;
-	init(&stack);
-	push(&stack, 1);
-	push(&stack, 2);
-	push(&stack, 3);
-	push(&stack, 4);
-	push(&stack, 5);
-	push(&stack, 6);
-	push(&stack, 7);
-	printf("%d\n", pop(&stack));
-	printf("%d\n", pop(&stack));
-	printf("%d\n", pop(&stack));
-	printf("%d\n", pop(&stack));
-	printf("%d\n", pop(&stack));
-	printf("%d\n", pop(&stack));
-	printf("%d\n", pop(&stack));
-	printf("%d\n", pop(&stack));
-	printf("%d\n", pop(&stack));
-	printf("%d\n", pop(&stack));
-	printf("%d\n", pop(&stack));
-	printf("%d\n", is_empty(&stack));
+	/* Add test code */
 	return 0;
 
 }
