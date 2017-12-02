@@ -8,6 +8,7 @@ typedef struct stack {
 	int top;
 	struct listnode *head;
 } Stack;
+void init(Stack *stack);
 int is_empty(Stack *stack);
 void push(Stack *stack, int data);
 int pop(Stack *stack);

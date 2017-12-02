@@ -1,10 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <int_stack.h>
-#define INT_MIN 0x80000000
+#include "int_stack.h"
 void init(Stack *stack) {
 	stack->top = -1;
-	stack->head = NULL:
+	stack->head = NULL;
 }
 int is_empty(Stack *stack) {
 	return stack->top == -1;
@@ -19,7 +18,7 @@ void push(Stack *stack, int data) {
 int pop(Stack *stack) {
 	if (is_empty(stack)) {
 		perror("Stack Full.\n");
-		return INT_MIN;
+		return 0x80000000;
 	}
 	Listnode *temp = stack->head;
 	stack->head = stack->head->next;

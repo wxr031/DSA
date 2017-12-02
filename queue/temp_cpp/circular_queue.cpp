@@ -12,25 +12,7 @@ public:
 	void enqueue(int data);
 	int dequeue();
 	int get_size();
-#ifdef DEBUG
-	friend void printCircularQueue(Queue q);
-#endif
 };
-#ifdef DEBUG
-void printCircularQueue(Queue q) {
-#ifdef CALL_COMP
-	cout << "capacity " << q.capacity << endl;
-	cout << "front " << q.front << " rear " << q.rear << endl;
-#endif
-	if (q.front == -1) return;
-	int start = q.front;
-	cout << q.array[start] << endl; // <- remember to do this
-	while (start != q.rear) {
-		start = (start == q.capacity - 1)? 0: start + 1;
-		cout << q.array[start] << endl;
-	}
-}
-#endif
 bool Queue::is_empty() {
 	return front == -1;
 }
@@ -45,7 +27,8 @@ void Queue::enqueue(int data) {
 	if (rear == capacity - 1) rear = 0;
 	else rear ++; // alternative method: rear = (rear + 1) % capacity
 	array[rear] = data;
-	if (front == -1) front = 0; // if the queue is empty, make front points to 0
+	if (front == -1)
+		front = 0; // if the queue is empty, make front points to 0
 }
 int Queue::dequeue () {
 	if (is_empty()) {
@@ -63,24 +46,6 @@ int Queue::get_size() {
 	return (rear > front)? rear - front + 1: capacity - front + rear + 1;
 }
 int main() {
-	Queue q(5);
-    if (q.is_empty()) {
-        cout << "queue is empty.\n\n";
-    }
-	q.enqueue(14);
-	q.enqueue(22);
-	q.enqueue(13);
-	q.enqueue(-6);
-	q.dequeue();
-	q.enqueue(-1);
-	q.enqueue(-8);
-	q.enqueue(9);
-	q.dequeue();
-	q.dequeue();
-	q.dequeue();
-	q.dequeue();
-	q.dequeue();
-	q.dequeue();
-	printCircularQueue(q);
+	/* Add test code */
     return 0;
 }

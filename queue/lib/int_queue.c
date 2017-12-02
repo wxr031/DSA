@@ -1,23 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <limits.h>
-typedef struct listnode {
-	int data;
-	struct listnode *next;
-} Listnode;
-typedef struct queue {
-	int size;
-	Listnode *front, *rear;
-} Queue;
+#include "int_queue.h"
 void init_queue(Queue *q) {
 	q->size = 0;
 	q->front = q->rear = NULL;
 }
 int is_empty(Queue *q) {
-	return q->front == NULL;
+	return q->front == NULL; // return q->size == 0;
 }
 void enqueue(Queue *q, int data) {
 	Listnode *new = (Listnode *)malloc(sizeof(Listnode));
+	if (!new) {
+		perror("Memory Error\n"); // fprintf(stderr, "Memory Error\n");
+		exit(EXIT_FAILURE);
+	}
 	new->data = data;
 	new->next = NULL;
 	q->size ++;
@@ -34,13 +30,9 @@ int dequeue(Queue *q) {
 		return INT_MIN;
 	}
 	Listnode *temp = q->front;
-	int return_data = temp->data;
+	int ret_data = temp->data;
 	q->front = q->front->next;
 	q->size --;
 	free(temp);
-	return return_data;
-}
-int main() {
-	/* Add test code */
-	return 0;
+	return ret_data;
 }
