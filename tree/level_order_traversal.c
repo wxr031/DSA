@@ -25,7 +25,7 @@ void enqueue(Queue *q, Treenode *data) {
 	new_node->next = NULL;
 	q->size ++;
 	if (!q->front) {
-		q->front = q->rear = new;
+		q->front = q->rear = new_node;
 		return;
 	}
 	q->rear->next = new_node;
@@ -54,8 +54,7 @@ Treenode *dequeue(Queue *q) {
 	free(temp);
 	return ret_data;
 }
-
-void *level_order_traverse(Treenode *root) {
+void level_order_traverse(Treenode *root) {
 	Queue q;
 	init_queue(&q);
 	enqueue(&q, root);
@@ -71,5 +70,5 @@ void *level_order_traverse(Treenode *root) {
 }
 int main() {
 	/* Add test code */
-	Treenode *root = 
+	return 0;
 }
