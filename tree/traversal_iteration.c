@@ -22,6 +22,7 @@ Treenode *insert_node(Treenode *root, int data) {
 /* Preorder Traversal */
 /* Version one */
 void preorder1(Treenode *root) {
+	if (!root) return;
 	Stack s;
 	init_stack(&s);
 	while (1) {
@@ -39,10 +40,10 @@ void preorder1(Treenode *root) {
 }
 /* Version two */
 void preorder2(Treenode *root) {
+	if (!root) return;
 	Stack s;
 	init_stack(&s);
-	int cont = 1;
-	while (cont) {
+	while (1) {
 		if (root) {
 			printf("%d\n", root->data);
 			push(&s, root);
@@ -50,7 +51,7 @@ void preorder2(Treenode *root) {
 		} else if (!is_empty_stack(&s)) {
 			root = pop(&s);
 			root = root->right;
-		} else cont = 0;
+		} else break;
 	}
 	delete_stack(&s);
 }
@@ -58,6 +59,7 @@ void preorder2(Treenode *root) {
 /* Inorder */
 /* Version one */
 void inorder1(Treenode *root) {
+	if (!root) return;
 	Stack s;
 	init_stack(&s);
 	while (1) {
@@ -77,8 +79,7 @@ void inorder1(Treenode *root) {
 void inorder2(Treenode *root) {
 	Stack s;
 	init_stack(&s);
-	int cont = 1;
-	while (cont) {
+	while (1) {
 		if (root) {
 			push(&s, root);
 			root = root->left;
@@ -86,7 +87,7 @@ void inorder2(Treenode *root) {
 			root = pop(&s);
 			printf("%d\n", root->data);
 			root = root->right;
-		} else cont = 0;
+		} else break;
 	}
 	delete_stack(&s);
 }
@@ -120,7 +121,16 @@ void postorder1(Treenode *root) {
 /* Version 2 */
 /* Using one stack */
 // Algorithm:
-
+// 1. push the root first, then the root's right child to the stack.
+// 2. make root points to its left child.
+// 3. while the stack is not empty:
+//    if root is NULL:
+//    (1) pop the stack and make root points to the popped element.
+//    (2) if root is the right child of the stack's top element:
+//            remove the right child from stack, push the root back into the stack
+//            and make root points to its right child.
+//        else:
+//            print the root's data and pop the stack until the former condition occurs.
 void postorder2(Treenode *root) {
 	if (!root) return;
 	Stack s;
