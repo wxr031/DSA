@@ -21,12 +21,14 @@ Treenode *newnode(char c) {
 // 'L' represent leaf
 Treenode *IL_tree(char pre_str[], int N, int *curr) {
 	if (N == *curr) return NULL;
-	Treenode *new = newnode(pre_str[*curr]);
 	++ *curr;
+	Treenode *new = newnode(pre_str[*curr]);
 	if (pre_str[*curr] == 'I') {
 		new->left = IL_tree(pre_str, N, curr);
 		new->right = IL_tree(pre_str, N, curr);
 	}
+	/* If the node that we need to construct is leaf (that is, pre_str[*curr] == 'L'), we need to add NULL to both of the node's child */
+	/* Since the function newnode did the work for us, we need not do anything consequently.*/
 	return new;
 }
 void inorder(Treenode *root) {
