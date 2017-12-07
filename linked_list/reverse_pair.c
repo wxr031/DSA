@@ -70,15 +70,9 @@ Listnode *reverse_iteration2(Listnode *head) {
 		if (curr)
 			after = curr->next;
 	}
-
+	return head;
 }
 int main() {
 	/* Add test code */
-	Listnode *head = NULL;
-	head = reverse_iteration(head);
-	while (head) {
-		printf("%d\n", head->data);
-		head = head->next;
-	}
 	return 0;
 }
