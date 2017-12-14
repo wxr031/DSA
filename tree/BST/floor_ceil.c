@@ -19,10 +19,10 @@ void find_ceiling(Treenode *root, int num, int *rem) {
 void find_floor(Treenode *root, int num, int *rem) {
 	if (!root) return;
 	if (root->data > num)
-		find_ceiling(root->left, num, rem);
+		find_floor(root->left, num, rem);
 	else if (root->data < num) {
 		*rem = root->data;
-		find_ceiling(root->right, num, rem);
+		find_floor(root->right, num, rem);
 	}
 	else *rem = root->data;
 }
@@ -53,13 +53,10 @@ Treenode *insert(Treenode *root, int data) {
 }
 int main() {
 	Treenode *root = NULL;
-	root = insert(root, 10);
-	root = insert(root, 4);
-	root = insert(root, 17);
-	root = insert(root, 2);
-	root = insert(root, 5);
-	root = insert(root, 12);
-	root = insert(root, 20);
+	int val;
+	while (scanf("%d", &val) == 1)
+		root = insert(root, val);
+	printf("done\n");
 	int ceiling, floor;
 	int num;
 	while (scanf("%d", &num) == 1) {

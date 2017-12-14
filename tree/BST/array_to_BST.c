@@ -14,7 +14,27 @@ Treenode *array_to_BST(int array[], int L_id, int R_id) {
 	new->right = array_to_BST(array, mid + 1, R_id);
 	return new;
 }
+void inorder(Treenode *root) {
+	if (!root) return;
+	inorder(root->left);
+	printf("%d\n", root->data);
+	inorder(root->right);
+}
+void preorder(Treenode *root) {
+	if (!root) return;
+	printf("%d\n", root->data);
+	preorder(root->left);
+	preorder(root->right);
+}
 int main() {
 	/* Add test code */
+	int num, i;
+	int array[1024];
+	scanf("%d", &num);
+	for (i = 0; i < num; i ++)
+		scanf("%d", array + i);
+	Treenode *root = array_to_BST(array, 0, num - 1);
+	inorder(root);
+	preorder(root);
 	return 0;
 }
