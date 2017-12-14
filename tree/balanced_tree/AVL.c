@@ -42,7 +42,7 @@ Treenode *insert(Treenode *root, int data) {
 		newnode->height = 0;
 		return newnode;
 	}
-	if (data < root->data) {
+	else if (data < root->data) {
 		root->left = insert(root->left, data);
 		if (get_height(root->left) > get_height(root->right) + 1) {
 			if (data < root->left->data)
@@ -79,7 +79,7 @@ Treenode *delete(Treenode *root, int data) {
 			root->left = delete(root->left, root->data);
 		}
 	}
-	if (data < root->data)
+	else if (data < root->data)
 		root->left = delete(root->left, data);
 	else if (data > root->data)
 		root->right = delete(root->right, data);
