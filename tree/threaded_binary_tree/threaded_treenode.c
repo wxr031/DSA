@@ -1,9 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
-#ifdef TEST
-	#include <time.h>
-#endif
 typedef struct thread_treenode {
 	int data;
 	struct thread_treenode *left, *right;
@@ -127,32 +124,16 @@ Threaded_Treenode *delete(Threaded_Treenode *root, int data, Threaded_Treenode *
 }
 int main() {
 	Threaded_Treenode *root = newnode(); // construct dummy node
-	Threaded_Treenode *dummy = root;
-	srand(time(NULL));
-	char c;
-	int rem[1024], put_num = 0;
-	while ((c = getchar()) != EOF && c != '\n') {
-		if (c == 'i') {
-			int n = rand() % 1024;
-			insert(root, n);
-			rem[put_num ++] = n;
-		}
-		else if (c == 'd') {
-			if (put_num > 0) {
-				int n = rand() % put_num;
-				delete(root, rem[put_num])
-			}
-		}
-	}
 	insert(root, 6);
 	insert(root, 2);
 	insert(root, 7);
-	insert(root, 1);
-	insert(root, 5);
 	insert(root, 3);
 	insert(root, 4);
-	delete(root->left, 4, root);
-	printf("success\n");
+	insert(root, 1);
+	insert(root, 5);
+	root->left = delete(root->left, 1, root);
+	root->left = delete(root->left, 4, root);
+	root->left = delete(root->left, 7, root);
 	preorder(root);
 	printf("--------------------------------\n");
 	inorder(root);
