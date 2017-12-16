@@ -58,6 +58,7 @@ Treenode *BST_to_DLL(Treenode *root) {
 	return root;
 }
 /* Second version */
+/* A top-down approach */
 void build_DLL(Treenode *root) {
 	if (!root) return;
 	if (root->left) {
