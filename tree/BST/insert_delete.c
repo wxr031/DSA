@@ -1,9 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-typedef struct treenode {
-	int data;
-	struct treenode *left, *right;
-} Treenode;
 Treenode *insert(Treenode *root, int data) {
 	if (!root) {
 		Treenode *new = (Treenode *)malloc(sizeof(Treenode));
@@ -15,6 +9,7 @@ Treenode *insert(Treenode *root, int data) {
 		root->left = insert(root->left, data);
 	else if (root->data < data)
 		root->right = insert(root->right, data);
+	return root;
 }
 Treenode *delete(Treenode *root, int data) {
 	if (!root) return NULL;
