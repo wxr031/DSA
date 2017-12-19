@@ -17,12 +17,16 @@ Treenode *LLrotation(Treenode *root) {
 	Treenode *temp = root->left;
 	root->left = temp->right;
 	temp->right = root;
+	root->height = max(get_height(root->left, get_height(root->right))) + 1;
+	temp->height = max(get_height(temp->left), root->height) + 1;
 	return temp;
 }
 Treenode *RRrotation(Treenode *root) {
 	Treenode *temp = root->right;
 	root->right = temp->left;
 	temp->left = root;
+	root->height = max(get_height(root->left, get_height(root->right))) + 1;
+	temp->height = max(get_height(temp->right), root->height) + 1;
 	return temp;
 }
 Treenode *LRrotation(Treenode *root) {
@@ -121,7 +125,7 @@ int main() {
 	root = insert(root, 7);
 	root = delete(root, 1);
 	root = delete(root, 3);
-//	root = delete(root, 5);
+	root = delete(root, 5);
 	inorder(root);
 	printf("----------------\n");
 	preorder(root);
