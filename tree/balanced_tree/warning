@@ -1,0 +1,32 @@
+RBT.cpp:60:22: error: out-of-line definition of 'single_right_rotation' does not match any declaration in 'red_black_tree'; did you mean 'dingle_right_rotation'?
+void red_black_tree::single_right_rotation(Treenode *curr) {
+                     ^~~~~~~~~~~~~~~~~~~~~
+                     dingle_right_rotation
+RBT.cpp:16:7: note: 'dingle_right_rotation' declared here
+        void dingle_right_rotation(Treenode *);
+             ^
+RBT.cpp:93:5: error: use of undeclared identifier 'single_right_rotation'; did you mean 'dingle_right_rotation'?
+                                single_right_rotation(grandparent_node);
+                                ^~~~~~~~~~~~~~~~~~~~~
+                                dingle_right_rotation
+RBT.cpp:60:22: note: 'dingle_right_rotation' declared here
+void red_black_tree::single_right_rotation(Treenode *curr) {
+                     ^
+RBT.cpp:109:6: error: use of undeclared identifier 'single_right_rotation'; did you mean 'dingle_right_rotation'?
+                                        single_right_rotation(parent_node);
+                                        ^~~~~~~~~~~~~~~~~~~~~
+                                        dingle_right_rotation
+RBT.cpp:60:22: note: 'dingle_right_rotation' declared here
+void red_black_tree::single_right_rotation(Treenode *curr) {
+                     ^
+RBT.cpp:141:2: error: use of undeclared identifier 'BSTinsert'; did you mean 'BST_insert'?
+        BSTinsert(new_node);
+        ^~~~~~~~~
+        BST_insert
+RBT.cpp:121:22: note: 'BST_insert' declared here
+void red_black_tree::BST_insert(Treenode *new_node) {
+                     ^
+RBT.cpp:149:22: error: out-of-line definition of 'postorder' does not match any declaration in 'red_black_tree'
+void red_black_tree::postorder() {
+                     ^~~~~~~~~
+5 errors generated.
