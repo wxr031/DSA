@@ -23,8 +23,8 @@ disjoint_set::disjoint_set(int size_val) {
 int disjoint_set::Find(int num) {
 	if (parent[num] == num)
 		return num;
-	int parent_get = Find(parent[num]);
-	parent[num] = parent_get;
+	int parent_get = Find(parent[num]); // <- path compression
+	parent[num] = parent_get; // <- path compression
 	return parent_get;
 }
 void disjoint_set::Union(int num1, int num2) {

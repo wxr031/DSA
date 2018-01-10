@@ -5,7 +5,7 @@ typedef struct treenode {
 	int data;
 	Color color;
 	struct treenode *left, *right, *parent;
-
+	
 	treenode(int D, Color C): data(D), color(C) {
 		left = right = parent = nullptr;
 	}
@@ -155,18 +155,5 @@ void red_black_tree::postorder() {
 	postorder_aux(root);
 }
 int main() {
-	red_black_tree tree;
-	tree.insertion(6);
-	tree.insertion(2);
-	tree.insertion(4);
-	tree.insertion(5);
-	tree.insertion(3);
-	tree.insertion(7);
-	tree.insertion(1);
-	tree.inorder();
-	std::cout << "----" << std::endl;
-	tree.preorder();
-	std::cout << "----" << std::endl;
-	tree.postorder();
-	std::cout << "----" << std::endl;
+	
 }
