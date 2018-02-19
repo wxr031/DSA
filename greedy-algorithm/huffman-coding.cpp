@@ -19,8 +19,14 @@ struct compare {
 	}
 };
 
-using namespace std;
-using freq_priority_queue = priority_queue<Node *, vector<Node *>, compare >;
+using std::priority_queue;
+using std::vector;
+using std::string;
+using std::cout;
+using std::cin;
+using std::endl;
+using freq_priority_queue
+= priority_queue<Node *, vector<Node *>, compare >;
 
 void encode(Node *root, string str) {
 	if(!root->left && !root->right) {
@@ -50,7 +56,7 @@ void hoffman(freq_priority_queue freq) {
 		freq.push(new_node);
 	}
 	Node *root = freq.top();
-	string str = "";
+	string str("");
 	encode(root, str);
 }
 int main() {
