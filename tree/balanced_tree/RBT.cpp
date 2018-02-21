@@ -1,159 +1,235 @@
 #include <iostream>
-
-typedef enum color {red, black} Color;
-typedef struct treenode {
+struct Node {
 	int data;
-	Color color;
-	struct treenode *left, *right, *parent;
+	bool color;
+	Node *left, *right, *parent;
+	Node(int, bool);
+};
+Node::Node(int val, bool col) {
+	data = val;
+	color = col;
+	left = right = parent = nullptr;
+}
+class RBT {
+	Node *root;
 	
-	treenode(int D, Color C): data(D), color(C) {
-		left = right = parent = nullptr;
-	}
-} Treenode;
+	/* Define color black as true, color re as false */
+	const bool black = true, red = false;
 
-class red_black_tree {
-	Treenode *root;
-	void single_left_rotation(Treenode *);
-	void single_right_rotation(Treenode *);
-	void BST_insertion(Treenode *);
-	void fix_violation(Treenode *);
-	void inorder_aux(Treenode *curr) {
-		if (curr == nullptr) return;
-		inorder_aux(curr->left);
-		std::cout << curr->data << "-->" << curr->color << std::endl;
-		inorder_aux(curr->right);
-	}
-	void preorder_aux(Treenode *curr) {
-		if (curr == nullptr) return;
-		std::cout << curr->data << "-->" << curr->color << std::endl;
-		preorder_aux(curr->left);
-		preorder_aux(curr->right);
-	}
-	void postorder_aux(Treenode *curr) {
-		if (curr == nullptr) return;
-		postorder_aux(curr->left);
-		postorder_aux(curr->right);
-		std::cout << curr->data << "-->" << curr->color << std::endl;
-	}
+	/* Utilities */
+	void left_rotate(Node *);
+	void right_rotate(Node *);
+	Node *insert_node(int);
+	void adjustment(Node *);
+
+	void inorder_util(Node *);
+	void preorder_util(Node *);
 public:
-	red_black_tree() {
-		root = nullptr;
-	}
-	void insertion(int);
+	RBT();
+	void insert(int);
 	void inorder();
 	void preorder();
-	void postorder();
 };
-void red_black_tree::single_left_rotation(Treenode *curr) {
-	Treenode *temp = curr->right;
-	curr->right = temp->left;
-	if (curr->right != nullptr)
-		curr->right->parent = curr;
-	temp->parent = curr->parent;
-	if (curr->parent == nullptr)
-		root = temp;
-	else if (curr->parent->left == curr)
-		curr->parent->left = temp;
-	else if (curr->parent->right == curr)
-		curr->parent->right = temp;
-	temp->left = curr;
-	curr->parent = temp;
+RBT::RBT() {
+	root = nullptr;
 }
-void red_black_tree::single_right_rotation(Treenode *curr) {
-	Treenode *temp = curr->left;
-	curr->left = temp->right;
-	if (curr->left != nullptr)
-		curr->left->parent = curr;
-	temp->parent = curr->parent;
-	if (curr->parent == nullptr)
-		root = temp;
-	else if (curr->parent->left == curr)
-		curr->parent->left = temp;
-	else if (curr->parent->right == curr)
-		curr->parent->right = temp;
-	temp->right = curr;
-	curr->parent = temp;
+
+/* Rotation */
+void RBT::right_rotate(Node *curr) {
+	Node *child = curr->left, *parent = curr->parent;
+	/* First, make the left child of 'curr' node points to 
+	   the right child of 'child' node. */
+	curr->left = child->right;
+	if(child->right) {
+		child->right->parent = curr;
+	}
+
+	/* Next, make the parent of 'child' points to the parent of 
+	   'curr' node */
+	if(!parent) {
+		/* if curr is root itself, make 'child' node new root */
+		root = child;
+	}
+	else if(parent->left == curr) {
+		parent->left = child;
+	}
+	else {
+		parent->right = child;
+	}
+	child->parent = parent;
+	/* Finally, make the right child of 'child' node points to curr */
+	child->right = curr;
+	curr->parent = child;
 }
-void red_black_tree::fix_violation(Treenode *curr) {
-	Treenode *parent_node = nullptr, *grandparent_node = nullptr;
-	while (curr != root && curr->parent != root && curr->color == red && curr->parent->color == red) {
-		parent_node = curr->parent;
-		grandparent_node = parent_node->parent;
-		if (grandparent_node->left == parent_node) {
-			Treenode *uncle_node = grandparent_node->right;
-			if (uncle_node != nullptr && uncle_node->color == red) {
-				grandparent_node->color = red;
-				parent_node->color = black;
-				uncle_node->color = black;
-				curr = grandparent_node;
+void RBT::left_rotate(Node *curr) {
+	Node *child = curr->right, *parent = curr->parent;
+	/* First, make the right child of 'curr' node points to 
+	   the left child of 'child' node. */
+	curr->right = child->left;
+	if(child->left) {
+		child->left->parent = curr;
+	}
+
+	/* Next, make the parent of 'child' points to the parent of 
+	   'curr' node */
+	if(!parent) {
+		/* if curr is root itself, make 'child' node new root */
+		root = child;
+	}
+	else if(parent->right == curr) {
+		parent->right = child;
+	}
+	else {
+		parent->left = child;
+	}
+	child->parent = parent;
+	/* Finally, make the left child of 'child' node points to curr */
+	child->left = curr;
+	curr->parent = child;
+}
+
+/* Insert node */
+/* The implementation of inserting a node is nearly the same as the
+   insertion of binary search tree */
+Node *RBT::insert_node(int val) {
+	if(!root) {
+		return root = new Node(val, black);
+	}
+	Node *curr = root, *prev = nullptr;
+	
+	/* Find proper position */
+	while(curr) {
+		prev = curr;
+		if(val < curr->data) {
+			curr = curr->left;
+		}
+		else if(val > curr->data) {
+			curr = curr->right;
+		}
+	}
+	
+	/* Insert new node */
+	Node *temp = new Node(val, red);
+	if(val < prev->data) {
+		prev->left = temp;
+	}
+	else if(val > prev->data) {
+		prev->right = temp;
+	}
+	temp->parent = prev;
+
+	return temp;
+}
+
+/* Adjustment */
+void RBT::adjustment(Node *curr) {
+	/* continue the loop while curr is not root and
+	   both the color of root and its parent are red */
+	while(curr->parent && curr->color == red
+			&& curr->parent->color == red) {
+		Node *parent = curr->parent, *grand = parent->parent;
+
+		/* First Case */
+		/* if the 'parent' node is the left child of 'grand' */
+		if(grand->left == parent) {
+			Node *uncle = grand->right;
+			
+			/* Case 1 */
+			/* uncle is red, only recoloring required */
+			if(uncle && uncle->color == red) {
+				parent->color = uncle->color = black;
+				grand->color = red;
+				curr = grand;
 			}
+			
+			/* uncle is black, rotation and recoloring required */
 			else {
-				if (parent_node->right == curr) {
-					single_left_rotation(parent_node);
-					std::swap(parent_node, curr);
+				
+				/* Case 2 */
+				/* 'curr' node is the outside grandchild of 'grand' node */
+				/* right rotation and recoloring required */
+				grand->color = red;
+				if(parent->left == curr) {
+					parent->color = black;
+					right_rotate(grand);
+					curr = parent;
 				}
-				single_right_rotation(grandparent_node);
-				parent_node->color = black;
-				grandparent_node->color = red;
-				curr = parent_node;
+				/* Case 3 */
+				/* 'curr' node is the inside grandchild of 'grand' node */
+				/* do left rotation on 'parent' node first, 
+				   then do right rotation on grand node  */
+				else {
+					curr->color = black;
+					left_rotate(parent);
+					right_rotate(grand);
+				}
 			}
 		}
-		if (grandparent_node->right == parent_node) {
-			Treenode *uncle_node = grandparent_node->left;
-			if (uncle_node != nullptr && uncle_node->color == red) {
-				grandparent_node->color = red;
-				parent_node->color = black;
-				uncle_node->color = black;
-				curr = grandparent_node;
+
+		/* Second Case */
+		/* if the 'parent' node is the right child of 'grand' */
+		/* Implementation is similar to the First Case */
+		else {
+			Node *uncle = grand->left;
+			if(uncle && uncle->color == red) {
+				parent->color = uncle->color = black;
+				grand->color = red;
+				curr = grand;
 			}
 			else {
-				if (parent_node->left == curr) {
-					single_right_rotation(parent_node);
-					std::swap(parent_node, curr);
+				grand->color = red;
+				if(parent->right == curr) {
+					parent->color = black;
+					left_rotate(grand);
+					curr = parent;
 				}
-				single_left_rotation(grandparent_node);
-				parent_node->color = black;
-				grandparent_node->color = red;
-				curr = parent_node;
+				else {
+					curr->color = black;
+					right_rotate(parent);
+					left_rotate(grand);
+				}
 			}
 		}
 	}
+
+	/* Always render the color of root node black */
 	root->color = black;
 }
-void red_black_tree::BST_insertion(Treenode *new_node) {
-	if (root == nullptr) {
-		root = new_node;
-		return;
-	}
-	Treenode *curr = root, *prev = nullptr;
-	while (curr != nullptr) {
-		prev = curr;
-		if (new_node->data < curr->data)
-			curr = curr->left;
-		else curr = curr->right;
-	}
-	new_node->parent = prev;
-	if (new_node->data < prev->data)
-		prev->left = new_node;
-	else prev->right = new_node;
-	fix_violation(new_node);
+
+/* Full Insertion */
+void RBT::insert(int val) {
+	adjustment(insert_node(val));
 }
-void red_black_tree::insertion(int D) {
-	Treenode *new_node = new Treenode(D, red);
-	BST_insertion(new_node);
+void RBT::inorder_util(Node *curr) {
+	if(!curr) return;
+	inorder_util(curr->left);
+	std::cout << curr->data << " " << 
+		((curr->color == red) ? "red" : "black") << std::endl;
+	inorder_util(curr->right);
 }
-void red_black_tree::deletion(int D) {
-	
+void RBT::inorder() {
+	inorder_util(root);
 }
-void red_black_tree::inorder() {
-	inorder_aux(root);
+void RBT::preorder_util(Node *curr) {
+	if(!curr) return;
+	std::cout << curr->data << " " << 
+		((curr->color == red) ? "red" : "black") << std::endl;
+	preorder_util(curr->left);
+	preorder_util(curr->right);
 }
-void red_black_tree::preorder() {
-	preorder_aux(root);
-}
-void red_black_tree::postorder() {
-	postorder_aux(root);
+void RBT::preorder() {
+	preorder_util(root);
 }
 int main() {
-	
+	int num;
+	RBT tree;
+	while(std::cin >> num) {
+		tree.insert(num);
+		std::cout << "*******\n";
+		tree.inorder();
+		std::cout << "-------\n";
+		tree.preorder();
+		std::cout << "*******\n\n\n";
+	}
+	return 0;
 }
