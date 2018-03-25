@@ -77,8 +77,8 @@ std::vector<std::pair<int,int> > merge(std::vector<std::pair<int,int> > start,
 std::vector<std::pair<int,int> > div_and_conq(int start, int finish) {
 	if(start == finish) {
 		std::vector<std::pair<int,int> > result;
-		result.push_back(std::make_pair(std::get<0>(data[start]), std::get<2>(data[start])));
-		result.push_back(std::make_pair(std::get<1>(data[start]), 0));
+		result.push_back(std::make_pair(std::get<0>(data[start]), std::get<1>(data[start])));
+		result.push_back(std::make_pair(std::get<2>(data[start]), 0));
 		return result;
 	}
 	int mid = start + ((finish - start) >> 1);
@@ -98,13 +98,13 @@ std::vector<std::pair<int,int> > div_and_conq(int start, int finish) {
 int main() {
 	int start, finish, height;
 	int cnt = 0;
-	while(std::cin >> start >> finish >> height) {
-		data.push_back(std::make_tuple(start, finish, height));
+	while(std::cin >> start >> height >> finish) {
+		data.push_back(std::make_tuple(start, height, finish));
 		++cnt;
 	}
-	std::vector<std::pair<int,int> > result = div_and_conq(0, cnt);
+	std::vector<std::pair<int,int> > result = div_and_conq(0, cnt - 1);
 	for(auto pair : result) {
-		std::cout << pair.first << " " << pair.second << std::endl;
+		std::cout << pair.first << " " << pair.second << " \n"[pair == *(result.end() - 1)];
 	}
 	return 0;
 }
